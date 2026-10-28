@@ -13,7 +13,8 @@
     "PlayerNametagMixin",
     "ZoomMixin",
     "ShulkerTooltipMixin",
-    "ItemGlintMixin"
+    "ItemGlintMixin",
+    "ScreenSkyMixin"
   ],
   "injectors": {
     "defaultRequire": 0
