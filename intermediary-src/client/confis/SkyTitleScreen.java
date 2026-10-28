@@ -9,11 +9,7 @@ import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import org.lwjgl.glfw.GLFW;
 
-/**
- * Sky-style main menu that replaces the vanilla title screen (switch: Config.skyTitle).
- * Left column of frosted glass buttons, drifting clouds over a sky gradient, quit at the bottom centre.
- * Drawn with fill() only; clicks are polled from GLFW (same trick as KeyPoll), so no input signatures are needed.
- */
+/** Sky-style main menu (real sky photo background). */
 public class SkyTitleScreen extends class_437 {
     private static final String[] LABELS = {"single player", "multiplayer", "mod menu", "sky mods", "options"};
     private final class_310 mc = class_310.method_1551();
@@ -30,23 +26,7 @@ public class SkyTitleScreen extends class_437 {
     @Override
     public void method_25394(class_332 g, int mx, int my, float d) {
         int W = field_22789, H = field_22790;
-        // sky gradient in bands
-        int bands = 24;
-        for (int i = 0; i < bands; i++) {
-            float t = i / (float) (bands - 1);
-            int r = (int) (0x2F + (0x9C - 0x2F) * t), gr = (int) (0x7F + (0xCF - 0x7F) * t), b = (int) (0xE0 + (0xFF - 0xE0) * t);
-            g.method_25294(0, H * i / bands, W, H * (i + 1) / bands + 1, 0xFF000000 | r << 16 | gr << 8 | b);
-        }
-        // drifting clouds (soft rounded white blobs)
-        long now = System.currentTimeMillis();
-        for (int i = 0; i < 7; i++) {
-            int cw = 120 + (i * 53) % 140, ch = 22 + (i * 17) % 18;
-            float speed = 0.006f + 0.002f * (i % 3);
-            int x = (int) (((now * speed) + i * 211) % (W + cw * 2)) - cw;
-            int y = (int) (H * (0.08f + 0.13f * i)) % Math.max(1, H - ch);
-            Glass.fillRound(g, x, y, cw, ch, ch / 2, 0x55FFFFFF);
-            Glass.fillRound(g, x + cw / 5, y - ch / 3, cw / 2, ch, ch / 2, 0x4DFFFFFF);
-        }
+        SkyBg.draw(g, W, H);
 
         boolean down = GLFW.glfwGetMouseButton(GLFW.glfwGetCurrentContext(), GLFW.GLFW_MOUSE_BUTTON_LEFT) == GLFW.GLFW_PRESS;
         boolean click = down && !mouseWas;
@@ -87,7 +67,7 @@ public class SkyTitleScreen extends class_437 {
         }
     }
 
-    /** Opens Mod Menu if it is installed (looked up by name, no dependency), otherwise the Confis menu. */
+    /** Opens Mod Menu if it is installed, otherwise the Confis menu. */
     private void openModMenu() {
         try {
             Class<?> c = Class.forName("com.terraformersmc.modmenu.gui.ModsScreen");
