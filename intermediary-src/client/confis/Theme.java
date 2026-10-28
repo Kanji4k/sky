@@ -24,7 +24,7 @@ public final class Theme {
         GREY("Grey", 0x6B7078),
         PINK("Pink", 0xE86FA8),
         GREEN("Green", 0x2FA85A),
-        LIGHT_BLUE("Light Blue", 0x5CC8F0),
+        LIGHT_BLUE("Sky Blue", 0x4DA3F5),
         ORANGE("Orange", 0xE8872A);
 
         public final String label;
