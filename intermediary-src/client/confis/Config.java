@@ -117,6 +117,8 @@ public class Config {
     /** Sky-style main menu replaces the vanilla title screen / sky-blue glass look for HUD modules. */
     public boolean skyTitle = true;
     public boolean skyHud = true;
+        public boolean skyScreens = true;
+    public boolean skyThemeApplied = false;
 
     public static Config get() {
         if (instance == null) load();
